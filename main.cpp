@@ -1,29 +1,28 @@
 #include <SFML/Graphics.hpp>
-#include "Vec3.h"
-#include "Bird.h"
+#include "Flock.h"
 
 int main()
 {
     sf::ContextSettings settings;
-    settings.antialiasingLevel = 8;
+    settings.antialiasingLevel = 4;
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "test bird", sf::Style::Default, settings);
-    sf::CircleShape bird(10.f);
-    bird.setFillColor(sf::Color::Green);
-    Bird bird1;
-    bird1.pos = { 300, 300, 0 };
-    Vec3 target = { 0,0,0 };
-    double k1 = 0.005;
-    double k2 = 0.05;
-    bird1.set_dt(0.1);
-
+    
+    const int n = 50;
+    vector<sf::CircleShape> birds(n);
+    for (int i = 0; i < n; i++) {
+        birds[i] = sf::CircleShape(10.f);
+        birds[i].setFillColor(sf::Color::Green);
+    }
+    Flock flock(n);
+    //flock.target = { 500, 500, 0 };
     while (window.isOpen())
     {
         sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
-        target = { mouse_pos.x, mouse_pos.y, 0};
-
-        bird1.acc = (bird1.pos - target) * -k1 - bird1.vel * k2;
-        bird1.update();
-        bird.setPosition( bird1.pos.x, bird1.pos.y);
+        flock.target = { mouse_pos.x, mouse_pos.y, 0};
+        flock.update();
+        for (int i = 0; i < n; i++)
+            birds[i].setPosition(flock.birds[i].pos.x, flock.birds[i].pos.y);
+        
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -31,7 +30,8 @@ int main()
                 window.close();
         }
         window.clear();
-        window.draw(bird);
+        for (int i = 0; i < n; i++)
+            window.draw(birds[i]);
         window.display();
     }
 

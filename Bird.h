@@ -9,6 +9,6 @@ public:
 	void update();
 	void print();
 private:
-	double dt;
+	double dt = 0;
 };
 
