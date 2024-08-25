@@ -11,18 +11,18 @@ int main()
     vector<sf::CircleShape> birds(n);
     for (int i = 0; i < n; i++) {
         birds[i] = sf::CircleShape(10.f);
-        birds[i].setFillColor(sf::Color::Green);
+        birds[i].setFillColor(sf::Color(80, 100, 255, 70));
     }
     Flock flock(n);
-    //flock.target = { 500, 500, 0 };
     while (window.isOpen())
     {
         sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
-        flock.target = { mouse_pos.x, mouse_pos.y, 0};
+        flock.target = { mouse_pos.x, mouse_pos.y, 10};
         flock.update();
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) {
             birds[i].setPosition(flock.birds[i].pos.x, flock.birds[i].pos.y);
-        
+            birds[i].setRadius(10.f / (1 + flock.birds[i].pos.z / 200));
+        }
         sf::Event event;
         while (window.pollEvent(event))
         {
