@@ -1,6 +1,8 @@
 #include "Vec3.h"
 #include <cmath>
 #include <iostream>
+#include <random>
+
 using std::cout;
 
 double Vec3::module() {
@@ -48,5 +50,30 @@ void Vec3::print() {
 
 Vec3 Vec3::norm() {
 	double l = module();
+	if (l == 0)return { 0, 0, 0 };
 	return {x / l, y / l, z / l};
+}
+
+Vec3 rand_vec3() {
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<> dis(-1.0, 1.0);
+	Vec3 ans(dis(gen), dis(gen), dis(gen));
+	ans.normalize();
+	return ans;
+}
+
+void shuffle(Vec3& vec, const double& k) {
+	vec = vec + rand_vec3() * k * vec.module();
+}
+
+double rand(const double& min, const double& max) {
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<> dis(min, max);
+	return dis(gen);
+}
+void constrain(double& val, const double& min, const double& max) {
+	if (val < min)val = min;
+	if (val > max) val = max;
 }

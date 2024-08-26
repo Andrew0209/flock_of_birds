@@ -1,28 +1,26 @@
-#include <SFML/Graphics.hpp>
+#include "Bird_texture.h"
 #include "Flock.h"
 
 int main()
 {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 4;
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "test bird", sf::Style::Default, settings);
-    
-    const int n = 50;
-    vector<sf::CircleShape> birds(n);
-    for (int i = 0; i < n; i++) {
-        birds[i] = sf::CircleShape(10.f);
-        birds[i].setFillColor(sf::Color(80, 100, 255, 70));
-    }
+    sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "test flock", sf::Style::Default, settings);
+
+    const int n = 200;
+    const double bird_size = 20.0;
+    vector<Bird_texture> birds(n);
     Flock flock(n);
+    for (int i = 0; i < n; i++) birds[i].set_bird(&flock.birds[i]);
+    double mouse_zpos = 500;
+
     while (window.isOpen())
     {
         sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
-        flock.target = { mouse_pos.x, mouse_pos.y, 10};
+        flock.target = { 1. * mouse_pos.x, 1. * mouse_pos.y, mouse_zpos };
+        mouse_zpos = rand(mouse_zpos - 10, mouse_zpos + 10);
+        constrain(mouse_zpos, 200, 700);
         flock.update();
-        for (int i = 0; i < n; i++) {
-            birds[i].setPosition(flock.birds[i].pos.x, flock.birds[i].pos.y);
-            birds[i].setRadius(10.f / (1 + flock.birds[i].pos.z / 200));
-        }
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -31,7 +29,7 @@ int main()
         }
         window.clear();
         for (int i = 0; i < n; i++)
-            window.draw(birds[i]);
+            birds[i].draw(window);
         window.display();
     }
 

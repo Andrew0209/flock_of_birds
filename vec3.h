@@ -12,7 +12,6 @@ public:
 	void normalize();
 	Vec3 norm();
 	void print();
-
 	Vec3 operator +(Vec3 a);
 	Vec3 operator -(Vec3 a);
 	Vec3 operator *(double n);
@@ -20,4 +19,9 @@ public:
 	bool operator ==(Vec3 a);
 	bool operator !=(Vec3 a);
 };
+
+Vec3 rand_vec3();
+void shuffle(Vec3& vec, const double& k = 0.1);
+double rand(const double& min, const double& max);
+void constrain(double& val, const double& min, const double& max);
 
