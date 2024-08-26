@@ -23,7 +23,7 @@ void Flock::update() {
 		birds[i].acc = (birds[i].pos - target) * -k1 - birds[i].vel * k2;
 		// update acceleration
 
-		int count = 500;
+		int count = 100;
 		birds[i].vel = birds[i].vel * count;
 
 		for (int j = 0; j < size(); j++) {
@@ -33,14 +33,14 @@ void Flock::update() {
 			if (dist.module() <= danger_radius) {
 				count++;
 				birds[i].vel = birds[i].vel + birds[j].vel;
-				Vec3 pushing = dist.norm() * (danger_radius * danger_radius / dist.module2() - 1) * 0.1;
+				Vec3 pushing = dist.norm() * (danger_radius * danger_radius / dist.module2() - 1) * 0.01;
 				birds[i].acc = birds[i].acc - pushing;
 				//pushing.print();
 			}
 			
 		}
 		birds[i].vel = birds[i].vel / count;
-		shuffle(birds[i].vel, 0.05);
+		shuffle(birds[i].vel, 0.2);
 
 		double vel = birds[i].vel.module();
 		if (vel > max_speed) {

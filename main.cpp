@@ -7,7 +7,7 @@ int main()
     settings.antialiasingLevel = 4;
     sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "test flock", sf::Style::Default, settings);
 
-    const int n = 200;
+    const int n = 500;
     const double bird_size = 20.0;
     vector<Bird_texture> birds(n);
     Flock flock(n);
@@ -18,7 +18,7 @@ int main()
     {
         sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
         flock.target = { 1. * mouse_pos.x, 1. * mouse_pos.y, mouse_zpos };
-        mouse_zpos = rand(mouse_zpos - 10, mouse_zpos + 10);
+        mouse_zpos = rand(mouse_zpos - 3, mouse_zpos + 3);
         constrain(mouse_zpos, 200, 700);
         flock.update();
         sf::Event event;
