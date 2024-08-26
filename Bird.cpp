@@ -3,8 +3,8 @@
 using std::cout;
 
 void Bird::update() {
-	pos = pos + vel * dt;
-	vel = vel + acc * dt;
+	pos = pos + vel * (*dt);
+	vel = vel + acc * (*dt);
 }
 void Bird::print() {
 	cout << "pos: ";

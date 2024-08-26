@@ -17,11 +17,11 @@ public:
 	void update();
 
 private:
-	double dt = 1.0;
+	double dt = 1.;
 	double danger_radius = 100;
 	double k1 = 0.003;
-	double k2 = 0.03;
+	double k2 = 0.1;
 	double min_speed = 10.0;
-	double max_speed = 40.0;
+	double max_speed = 30.0;
 };
 

@@ -3,7 +3,7 @@
 
 Flock::Flock(int n) {
 	Bird bird;
-	bird.set_dt(dt);
+	bird.set_dt(&dt);
 	int k = sqrt(n);
 	birds.resize(n);
 	while (n--) {
@@ -15,12 +15,15 @@ Flock::Flock(int n) {
 
 void Flock::add(Bird& a) {
 	birds.push_back(a);
-	birds[birds.size()].set_dt(dt);
+	birds[birds.size()].set_dt(&dt);
 }
 
 void Flock::update() {
+
 	for (int i = 0; i < size(); i++) {
-		birds[i].acc = (birds[i].pos - target) * -k1 - birds[i].vel * k2;
+
+		double k = 0.9;
+		birds[i].acc = birds[i].acc * k + ((birds[i].pos - target) * -k1 - birds[i].vel * k2) * (1.-k);
 		// update acceleration
 
 		int count = 100;
@@ -40,7 +43,7 @@ void Flock::update() {
 			
 		}
 		birds[i].vel = birds[i].vel / count;
-		shuffle(birds[i].vel, 0.2);
+		shuffle(birds[i].vel, 0.05);
 
 		double vel = birds[i].vel.module();
 		if (vel > max_speed) {

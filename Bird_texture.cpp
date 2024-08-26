@@ -18,7 +18,7 @@ void Bird_texture::draw(RenderWindow& window) {
         sf::Vertex line[] =
         {
             sf::Vertex(center),
-            sf::Vertex(center + Vector2f(dir.x * 2 * bird_size, dir.y * 2 * bird_size))
+            sf::Vertex(center + Vector2f(dir.x * 2 * new_bird_size, dir.y * 2 * new_bird_size))
         };
         line[0].color = Color(255, 0, 0, 200);
         line[1].color = Color(255, 0, 0, 200);
