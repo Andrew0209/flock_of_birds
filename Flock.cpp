@@ -26,23 +26,26 @@ void Flock::update() {
 		birds[i].acc = birds[i].acc * k + ((birds[i].pos - target) * -k1 - birds[i].vel * k2) * (1.-k);
 		// update acceleration
 
-		int count = 100;
-		birds[i].vel = birds[i].vel * count;
-
+		int count = 0;
+		Vec3 aligment_vel;
 		for (int j = 0; j < size(); j++) {
 			if (i == j)continue;
 			Vec3 dist = birds[j].pos - birds[i].pos;
 			// boids
 			if (dist.module() <= danger_radius) {
-				count++;
-				birds[i].vel = birds[i].vel + birds[j].vel;
-				Vec3 pushing = dist.norm() * (danger_radius * danger_radius / dist.module2() - 1) * 0.01;
-				birds[i].acc = birds[i].acc - pushing;
+				Vec3 pushing = dist.norm() * (danger_radius * danger_radius / dist.module2() - 1);
+				birds[i].acc = birds[i].acc * 0.9 - pushing * 0.1;
 				//pushing.print();
 			}
-			
+			if (dist.module() <= alignment_radius) {
+				count++;
+				aligment_vel = aligment_vel + birds[j].vel;
+			}	
 		}
-		birds[i].vel = birds[i].vel / count;
+		if (count != 0) {
+			aligment_vel = aligment_vel / count;
+			birds[i].vel = birds[i].vel * 0.8 + aligment_vel * 0.2;
+		}
 		shuffle(birds[i].vel, 0.05);
 
 		double vel = birds[i].vel.module();

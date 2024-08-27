@@ -1,6 +1,8 @@
 #include "Bird_texture.h"
 #include "Flock.h"
 #include <ctime>
+#include <iostream>
+
 int main()
 {
     sf::ContextSettings settings;
@@ -32,8 +34,11 @@ int main()
         for (int i = 0; i < n; i++)
             birds[i].draw(window);
         window.display();
-
-        while(time_end < time_start + 40)time_end = clock();
+        time_end = clock();
+        while(time_end < time_start + 30)time_end = clock();
+        //double dt = 1.0 * (time_end - time_start) / 40.0;
+        //flock.set_dt(dt);
+        //std::cout << dt << '\n';
     }
 
     return 0;

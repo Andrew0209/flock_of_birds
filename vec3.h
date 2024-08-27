@@ -6,6 +6,7 @@ class Vec3
 public:
 	template <typename T>
 	Vec3(T _x, T _y, T _z) :x(_x), y(_y), z(_z) {}
+	Vec3() :x(0), y(0), z(0) {}
 	double x, y, z;
 	double module();
 	double module2();

@@ -16,12 +16,15 @@ public:
 	uint32_t size() { return birds.size(); }
 	void update();
 
+	void set_dt(double new_dt) { dt = new_dt; }
+	double get_dt() { return dt; }
 private:
 	double dt = 1.;
-	double danger_radius = 100;
+	double danger_radius = 50;
+	double alignment_radius = 100;
 	double k1 = 0.003;
-	double k2 = 0.1;
+	double k2 = 0.05;
 	double min_speed = 10.0;
-	double max_speed = 30.0;
+	double max_speed = 20.0;
 };
 
