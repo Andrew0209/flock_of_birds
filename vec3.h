@@ -19,10 +19,14 @@ public:
 	Vec3 operator /(double n);
 	bool operator ==(Vec3 a);
 	bool operator !=(Vec3 a);
+	Vec3 operator *(Vec3 a);
 };
 
 Vec3 rand_vec3();
 void shuffle(Vec3& vec, const double& k = 0.1);
 double rand(const double& min, const double& max);
 void constrain(double& val, const double& min, const double& max);
+void constrain(Vec3& val, const Vec3& min, const Vec3& max);
+void constrain(int& val, const int& min, const int& max);
+Vec3 abs(const Vec3& a);
 

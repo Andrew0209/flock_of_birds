@@ -43,6 +43,9 @@ bool Vec3::operator ==(Vec3 a) {
 bool Vec3::operator !=(Vec3 a) {
 	return !(a.x == x && a.y == y && a.z == z);
 }
+Vec3 Vec3::operator *(Vec3 a) {
+	return { x * a.x, y * a.y, z * a.z };
+}
 
 void Vec3::print() {
 	cout << '(' << x << ", " << y << ", " << z << ")\n";
@@ -77,3 +80,14 @@ void constrain(double& val, const double& min, const double& max) {
 	if (val < min)val = min;
 	if (val > max) val = max;
 }
+
+void constrain(Vec3& val, const Vec3& min, const Vec3& max) {
+	constrain(val.x, min.x, max.x);
+	constrain(val.y, min.y, max.y);
+	constrain(val.z, min.z, max.z);
+}
+void constrain(int& val, const int& min, const int& max) {
+	if (val > max)val = max;
+	if (val < min)val = min;
+}
+Vec3 abs(const Vec3& a) { return { abs(a.x), abs(a.y), abs(a.z) }; }
