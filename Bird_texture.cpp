@@ -2,6 +2,11 @@
 #include <iostream>
 
 void Bird_texture::draw(RenderWindow& window) {
+    if (bird_data->pos.x > window.getSize().x + 2 * bird_size
+        || bird_data->pos.x < -2 * bird_size
+        || bird_data->pos.y > window.getSize().y + 2 * bird_size
+        || bird_data->pos.y < -2 * bird_size)
+        return;
     bird_shape.setPosition(bird_data->pos.x, bird_data->pos.y);
     //bird_shape.setFillColor(bird_color);
     double new_bird_size = 0.0;
