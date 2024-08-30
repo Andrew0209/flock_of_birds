@@ -9,7 +9,7 @@ int main()
     settings.antialiasingLevel = 4;
     sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "test flock", sf::Style::Default, settings);
     std::cout << "window size: " << window.getSize().x << '*' << window.getSize().y << '\n';
-    const int n = 10000;
+    const int n = 5000;
     const double bird_size = 20.0;
     vector<Bird_texture> birds(n);
     Flock flock(n);
@@ -18,9 +18,11 @@ int main()
     Vec3 bottom(-0.5 * window.getSize().x, -0.5 * window.getSize().y, -500.0);
 
     flock.set_border(Border(top, bottom));
-    for (int i = 0; i < n; i++) birds[i].set_bird(&flock.birds[i]);
     Grid grid(flock.getBorder(), flock.get_cell_size());
     flock.set_grid(&grid);
+
+    for (int i = 0; i < n; i++) birds[i].set_bird(&flock.birds[i]);
+
     double mouse_zpos = 700;
     uint32_t time_start = clock(), time_end = clock();
     while (window.isOpen())
@@ -42,7 +44,7 @@ int main()
             birds[i].draw(window);
         window.display();
         time_end = clock();
-        while(time_end < time_start + 30)time_end = clock();
+        while(time_end < time_start + 25)time_end = clock();
         //double dt = 1.0 * (time_end - time_start) / 40.0;
         //flock.set_dt(dt);
         //std::cout << dt << '\n';

@@ -41,7 +41,7 @@ void Flock::update() {
 
 				if (dist.module() <= danger_radius) {
 					Vec3 pushing = dist.norm() * (danger_radius * danger_radius / (dist.module2() + 0.0001) - 1);
-					birds[i].acc = birds[i].acc * 0.9 - pushing * 0.1;
+					birds[i].acc = birds[i].acc * 0.8 - pushing * 0.2;
 					//pushing.print();
 				}
 				if (dist.module() <= alignment_radius) {
@@ -67,13 +67,14 @@ void Flock::update() {
 				}
 			}
 		}
+
 		if (count != 0) {
 			aligment_vel = aligment_vel / count;
 			birds[i].vel = birds[i].vel * 0.8 + aligment_vel * 0.2;
 		}
 
 		// update velosity
-		shuffle(birds[i].vel, 0.05);
+		shuffle(birds[i].vel, 0.03);
 		double vel = birds[i].vel.module();
 		if (vel > max_speed) {
 			birds[i].acc = birds[i].acc - birds[i].vel.norm() * (vel - max_speed);
